@@ -1,0 +1,21 @@
+# ===============================
+# Generated output files
+# ===============================
+
+# Ignore all contents inside output, keep folder structure
+output/*
+
+!output/**/
+!output/**/.gitkeep
+
+# Large generated files
+*.jld2
+*.mat
+
+# Optional figure files
+*.png
+*.pdf
+*.svg
+
+# Julia artifacts
+*.log
