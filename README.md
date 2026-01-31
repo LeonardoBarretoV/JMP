@@ -37,3 +37,17 @@ To let Julia automatically determine the number of threads:
 
 ```bash
 julia -t auto
+
+See [Julia multi-threading documentation](https://docs.julialang.org/en/v1/manual/multi-threading/#man-multithreading) for details.
+
+---
+
+## Setup
+
+From the root of the repository, install all required packages:
+
+```bash
+julia --project -e "using Pkg; Pkg.instantiate(); Pkg.precompile()"
+
+This installs all dependencies specified in Project.toml.
+
