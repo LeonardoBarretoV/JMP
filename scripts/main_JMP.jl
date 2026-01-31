@@ -55,11 +55,11 @@ ProgressMeter.ijulia_behavior(:clear);
 
 Base.@kwdef struct Calib
     # Preferences / household
-    θ::Float64 = 1.0
-    ν::Float64 = 1.0
-    ies::Float64 = 1.0
-    crra::Float64 = 4.0
-    β::Float64 = 0.9880431080390226
+    θ::Float64 = 1.0 # Labor disutility parameter
+    ν::Float64 = 1.0 # Frisch elasticity
+    ies::Float64 = 1.0 # Intertemporal elasticity of substitution
+    crra::Float64 = 4.0 # Risk aversion coefficient
+    β::Float64 = 0.9880431080390226  # Discount factor
 
     # Assets grid
     a_min::Float64 = -0.02
@@ -67,43 +67,43 @@ Base.@kwdef struct Calib
     n_a::Int = 1000
 
     # Income / stimulus
-    z_bar::Int = 12
+    z_bar::Int = 12 # Stimulus checks criteria
 
     # Unemployment discretization
-    Pee::Float64 = 0.975
-    Puu::Float64 = 0.4
+    Pee::Float64 = 0.975 # Probability of remaining employed
+    Puu::Float64 = 0.4 # Probability of remaining unemployed
 
     # Targets
-    Λ_t::Float64 = 0.0
-    Λ_tu::Float64 = 0.005
-    Λ_a::Float64 = 5.06 * 4.0
-    Λ_g::Float64 = 0.05
-    Λ_f::Float64 = 0.04
-    Λ_b::Float64 = 1.05 * 4.0
-    Λ_bstar::Float64 = 0.31 * 4.0
-    Λ_rk::Float64 = 0.33
+    Λ_t::Float64 = 0.0 # Stimulus checks-to-GDP
+    Λ_tu::Float64 = 0.005 # Unemployment insurance-to-GDP
+    Λ_a::Float64 = 5.06 * 4.0 # Assets-to-GDP
+    Λ_g::Float64 = 0.05 # Government expenditure-to-GDP
+    Λ_f::Float64 = 0.04 # Tax revenue from firms-to-GDP
+    Λ_b::Float64 = 1.05 * 4.0 # Federal debt-to-GDP
+    Λ_bstar::Float64 = 0.31 * 4.0 # External debt-to-GDP
+    Λ_rk::Float64 = 0.33 # Capital share
 
     # Rates
-    r_target::Float64 = (1.0 + 0.01)^(1/4) - 1.0
-    π_bar::Float64 = (1.0 + 0.02)^(1/4) - 1.0
+    r_target::Float64 = (1.0 + 0.01)^(1/4) - 1.0 # Real interest rate
+    π_bar::Float64 = (1.0 + 0.02)^(1/4) - 1.0 # Inflation rate
 
     # Markup / pricing
-    mc::Float64 = 5.0 * 4.0
+    mc::Float64 = 5.0 * 4.0 # Debt maturity
 
     # Tax / labor
-    τ::Float64 = 0.181
-    nu_target::Float64 = 0.7
+    τ::Float64 = 0.181 # Progressivity parameter
+    nu_target::Float64 = 0.7 # Adjusted Frisch elasticity
 
     # Technology
-    A::Float64 = 0.035
-    μ::Float64 = 1.0
+    A::Float64 = 0.035 # Total factor productivity
+    μ::Float64 = 1.0 #Markup
 
     # Initial steady-state / COVID block
-    d_::Float64 = 1.0
-    Γ_n::Float64 = 1.0
-    Γ_c::Float64 = 1.0
-    covid::Float64 = 0.0
-    χ::Float64 = 0.44
+    d_::Float64 = 1.0 # Productivity parameter
+    Γ_n::Float64 = 1.0 # Pandemic labor supply constraint indicator
+    Γ_c::Float64 = 1.0 # Pandemic consumption supply constraint indicator
+    covid::Float64 = 0.0 # Pandemic indicator
+    χ::Float64 = 0.44 # Foreign demand elasticity 
 end
 
 # Some ratios from the steady state
