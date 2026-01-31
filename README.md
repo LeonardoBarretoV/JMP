@@ -51,3 +51,38 @@ julia --project -e "using Pkg; Pkg.instantiate(); Pkg.precompile()"
 ```
 This installs all dependencies specified in Project.toml.
 
+---
+
+## Running the Code
+
+From the root directory of the repository, execute:
+
+```bash
+julia --project -t auto scripts/main_JMP.jl
+```
+
+The script performs the following steps:
+
+1. Constructs and calibrates the model
+2. Computes the initial steady state
+3. Computes the final steady state
+4. Solves the transition path
+5. Generates summary tables
+6. Exports time paths to .mat files
+7. Saves model objects in output/
+
+All generated files are written to the output/ directory.
+
+---
+
+## Expected Runtime
+
+Expected runtime (after package installation):
+
+11 minutes
+
+Tested on:
+- Windows 11 Pro
+- Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
+- 8 cores (16 logical processors)
+- 32 GB RAM
