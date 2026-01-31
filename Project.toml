@@ -1,0 +1,4 @@
+name = "JMP"
+uuid = "92677458-6adc-47e4-8ead-2e0b961d9824"
+authors = ["Leonardo Barreto <cl.barreto15@gmail.com>"]
+version = "0.1.0"
