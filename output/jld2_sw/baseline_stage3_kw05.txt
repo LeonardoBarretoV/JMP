@@ -1,0 +1,15 @@
+Stage 3 sticky-wage run -- CONVERGED
+date              : 2026-09-01 11:51:44
+kappa_w           : 0.05
+iterations        : 265
+final norm        : 9.593786077748481e-6   (nlsolve f(x) inf-norm)
+f_converged       : true
+ftol              : 1.0e-5
+iteration cap     : 450
+nkpc_scale        : 1.0
+unknown vector    : 1599  = [r 801 ; s 798]
+max|R_asset|      : 4.0770641442922084e-6
+max|R_nkpc|       : 9.593786077748481e-6
+q_lag             : 1.0000136917305225
+peak |s-s_stage2| : 6.730222318585177 % over j=1:60
+contents          : (e_init, e_final, path)

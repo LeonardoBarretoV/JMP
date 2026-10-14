@@ -121,11 +121,11 @@ nu_from_tax(c::Calib) = c.nu_target / (1 - c.τ + c.nu_target * c.τ)
 
 function make_household(c::Calib)
     v = GHH(θ = c.θ, ν = c.ν)
-    P, z_vals = calibration_unemploy_mckay_(ROOT, c.Pee, c.Puu, 0.0)
+    P, z_vals, z_scale = calibration_unemploy_mckay_(ROOT, c.Pee, c.Puu, 0.0)   # [Z-NORM] z_vals now normalized so Z = 1 in the initial SS (was: P, z_vals = ...)
     u = EZ(ies = c.ies, ra = c.crra, β = c.β)
 
     a_grid = grid(start = c.a_min, stop = c.a_max, length = c.n_a, scale = :log)
-    return Household(u = u, a_grid = a_grid, v = v, P = P, z_grid = z_vals)
+    return Household(u = u, a_grid = a_grid, v = v, P = P, z_grid = z_vals), z_scale   # [Z-NORM] also return the scale factor (was: return Household(...))
 end
 
 function make_technology(c::Calib)
@@ -155,10 +155,11 @@ end
 # ============================================================
 c = Calib()
 
-h = make_household(c)
+h, z_scale = make_household(c)   # [Z-NORM] z_scale is reused for the transition households (was: h = make_household(c))
 t, δ = make_technology(c)
 g = make_taxsys(c, h)
 τk_ss = τ_k_ss(c, δ)
+println("[Z-NORM] scale factor = $z_scale;  Z in initial SS = $(sum(h.Pss .* h.z_grid))")   # [Z-NORM] sanity check: should print 1.0
 
 @time e_init = stationary_equilibrium_init(h, t, g, τk_ss, c.Λ_t, c.Λ_tu, c.Λ_g, c.Λ_b, c.Λ_bstar; r_range = (-0.007 * 0, 0.01), root_max = 1, verbose = true)
 b_y = e_init.b / y(e_init);
@@ -209,7 +210,7 @@ covid_path  = ts.covid_path
 
 Pee_path = ts.Pee_path
 Puu_path = ts.Puu_path
-pars_h_path = (θ = c.θ, ν = c.ν, ies = c.ies, crra = c.crra, β = c.β, a_min = c.a_min, a_max = c.a_max, z_u = 0.0, n_a = c.n_a, init_state = e_init.h.Pss)
+pars_h_path = (θ = c.θ, ν = c.ν, ies = c.ies, crra = c.crra, β = c.β, a_min = c.a_min, a_max = c.a_max, z_u = 0.0, n_a = c.n_a, init_state = e_init.h.Pss, z_scale = z_scale)   # [Z-NORM] added z_scale so the transition grid matches the initial SS
 h_path, chain, chain_long = h_path_transition_mckay_init(ROOT, Pee_path, Puu_path; pars_h_path...)
 
 @time path_r = solve_transition_h_r(e_init, e_final;

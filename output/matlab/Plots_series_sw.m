@@ -1,0 +1,363 @@
+%% [SW] STICKY-WAGE COPY of Plots_series.m -- generated, do not hand-edit.
+%% Only PATHS changed vs the original, plus the commented print() lines
+%% uncommented so every figure is written. Data series are untouched.
+%% Reads : <repo>/output/matlab       (Data_plots.xlsx, unchanged)
+%%         <repo>/output/matlab_sw    (model .mat from kappa_w = 0.05)
+%% Writes: <repo>/output/figures_sw
+
+%% Figures
+% Description: Plots official sov. debt
+% Author: Leonardo Barreto
+% This version: 6/1/2023
+% Modified:
+
+% Housekeeping
+clear
+% close all
+clc
+
+cd("C:/Users/Leonardo Barreto/Google Drive/GoodNotes/Fifth Year/JMP_inflation/output/matlab")   % [SW] data lives here
+
+[year, ~, ~]= xlsread('Data_plots.xlsx',3,'A2:A37');
+[quarter, ~, ~]= xlsread('Data_plots.xlsx',3,'B2:B37');
+[un_series_data, ~, ~]= xlsread('Data_plots.xlsx',3,'C14:C37');
+[pi_series_data, ~, ~]= xlsread('Data_plots.xlsx',3,'D14:D37');
+[misery, ~, ~]= xlsread('Data_plots.xlsx',3,'E2:E37');
+[gdp_g, ~, ~]= xlsread('Data_plots.xlsx',3,'F14:F37');
+[csi, ~, ~]= xlsread('Data_plots.xlsx',3,'G2:G37');
+[b_series_data, ~, ~]= xlsread('Data_plots.xlsx',3,'H14:H37');
+[bstar_series_data, ~, ~]= xlsread('Data_plots.xlsx',3,'I14:I37');
+[cons_g, ~, ~]= xlsread('Data_plots.xlsx',3,'J14:J37');
+[ui, ~, ~]= xlsread('Data_plots.xlsx',3,'K14:K37');
+[gov_exp, ~, ~]= xlsread('Data_plots.xlsx',3,'L14:L37');
+
+%Load model
+cd("C:/Users/Leonardo Barreto/Google Drive/GoodNotes/Fifth Year/JMP_inflation/output/matlab_sw")   % [SW] model output (was: Fourth Year folder)
+
+% Load data from .mat file
+data_model = load('model_time_series_ratio.mat');
+
+% Extract each series
+ts = data_model.time_series;
+
+y              = ts(:, 1);
+pi_            = ts(:, 2);
+un             = ts(:, 3);
+q              = ts(:, 4);
+b              = ts(:, 5);
+bd             = ts(:, 6);
+bstar          = ts(:, 7);
+l              = ts(:, 8);
+lump_sum_T     = ts(:, 9);
+lump_sum_Tu    = ts(:,10);
+r              = ts(:,11);
+r_k            = ts(:,12);
+k              = ts(:,13);
+n              = ts(:,14);
+w              = ts(:,15);
+C              = ts(:,16);
+lab_tax        = ts(:,17);
+tau_k          = ts(:,18);
+tau_n          = ts(:,19);
+X              = ts(:,20);
+G              = ts(:,21);
+
+% Steady states
+ss_init  = data_model.ss_init;
+ss_final = data_model.ss_final;
+
+
+% Read full matrix from Sheet 1
+%data_model = xlsread('model_series.xlsx', 1);  % or use readmatrix for newer MATLAB versions
+
+T = 20;               % original time series length
+T_extra = 5;          % quarters before 2020Q2 (2019Q1–2020Q1)
+T_total = T + T_extra;
+x = 1:T_total;
+
+% Time axis labels (adjust if you want quarterly labels)
+xtick_labels = {'2019','2020','2021','2022','2023','2024','2025'};
+
+% Steady-state values from ss_init (sheet 2 of Excel)
+pi_ss     = 100 * ((1 + ss_init(2))^4 - 1);
+un_ss    = 100 * ss_init(3);
+debt_ss  = 100 * ss_init(4) * ss_init(5) / (4 * ss_init(1));
+ext_debt_ss  = 100 * ss_init(4) * ss_init(7) / (4 * ss_init(1));
+l_ss     = 100 * ss_init(4) * ss_init(8) / (4 * ss_init(1));
+T_ss     = 100 * ss_init(9) / (4 * ss_init(1));
+Tu_ss    = 100 * ss_init(10) / (4 * ss_init(1));
+r_ss = 100 * ((1 + ss_init(11))^4 - 1);  % still annualized (as this is a level)
+w_ss = ss_init(15);
+c_ss = ss_init(16);
+y_ss = ss_init(1);
+k_ss = ss_init(13);
+n_ss = ss_init(14);
+G_ss = 100 *ss_init(21)/( ss_init(1));
+
+
+% Precompute shifted debt: q(t) * B(t+1)
+value_debt = q(1:T) .* [b(2:T); b(T)];
+value_ext_debt = q(1:T) .* [bstar(2:T); bstar(T)];
+
+% Construct padded time series with 5 quarters of steady state
+pi_series   = [repmat(pi_ss, T_extra, 1); 100 * ((1 + pi_(1:T)).^4 - 1)];
+un_series  = [repmat(un_ss, T_extra, 1); 100 * un(1:T)];
+debt_series = [repmat(debt_ss, T_extra, 1); 100 * value_debt ./ (4 * y(1:T))];
+ext_debt_series = [repmat(ext_debt_ss, T_extra, 1); 100 * value_ext_debt ./ (4 * y(1:T))];
+l_series   = [repmat(l_ss, T_extra, 1); 100 * q(1:T) .* l(1:T) ./ (4 * y(1:T))];
+T_series   = [repmat(T_ss, T_extra, 1); 100 * lump_sum_T(1:T) ./ (4 * y(1:T))];
+Tu_series  = [repmat(Tu_ss, T_extra, 1); 100 * lump_sum_Tu(1:T) ./ (4 * y(1:T))];
+r_series = [repmat(r_ss, T_extra, 1); 100 * ((1 + r(1:T)).^4 - 1)]; % leave interest rate annualized
+w_series = [ones(T_extra, 1); w(1:T) ./ w_ss];
+k_series = [repmat(k_ss / (4*y_ss), T_extra, 1); k(1:T) ./(4 *y_ss)];
+n_series = [ones(T_extra, 1); n(1:T) ./ n_ss];  % normalized so n_ss = 1
+gdp_growth = [100*(y(1) / y_ss - 1); 100 * (y(2:T) - y(1:T-1)) ./ y(1:T-1)];
+cons_growth = [100*(C(1) / c_ss - 1); 100 * (C(2:T) - C(1:T-1)) ./ C(1:T-1)];
+G_series  = [repmat(G_ss, T_extra, 1); 100 * G(1:T) ./ y(1:T)];
+
+
+gdp_growth_series = [zeros(T_extra + 1, 1); gdp_growth];
+cons_growth_series = [zeros(T_extra + 1, 1); cons_growth];
+
+% -------- PLOT --------
+figure('WindowState','maximized','Color',[1 1 1]);
+
+% (a) Inflation
+subplot(2,3,1)
+ax = gca;
+%yl = [0.0, max(pi_series)+1];  % preserve original y-axis range
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, pi_series, 'b-', 'LineWidth', 4);
+grid on
+plot(x, [pi_series_data; NaN], 'r--', 'LineWidth', 4);
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+yticks(0:2:10);
+ylim([0 10])  % restore original y-limits
+xlim([1 length(x)])
+ylabel('\%','fontsize',22,'interpreter','latex')
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(a). Inflation}','fontsize',25,'interpreter','latex')
+
+
+% (b) Unemployment
+subplot(2,3,2)
+ax = gca;
+bar(6, 100, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, un_series, 'b-', 'LineWidth', 4);
+grid on
+plot(x, [un_series_data; NaN], 'r--', 'LineWidth', 4);
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([2 14])
+xlim([1 length(x)])
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(b). Unemployment}','fontsize',23,'interpreter','latex')
+
+% (c) Debt
+subplot(2,3,3)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, debt_series, 'b-', 'LineWidth', 4); 
+grid on
+plot(x, [b_series_data; NaN], 'r--', 'LineWidth', 4);
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([100 135])
+xlim([1 length(x)])
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(c). Debt-to-GDP}','fontsize',23,'interpreter','latex')
+
+% (d)  External Debt
+subplot(2,3,4)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+p1  = plot(x, ext_debt_series, 'b-', 'LineWidth', 4); 
+grid on
+p2 = plot(x, [bstar_series_data; NaN], 'r--', 'LineWidth', 4);
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([26 36])
+xlim([1 length(x)])
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(d). External Debt-to-GDP}','fontsize',23,'interpreter','latex')
+legend([p1 p2],'Model $\hspace{0.5em}$','Data$\hspace{0.5em}$');
+set(legend,...
+    'Position',[0.440118532992161 0.0110994873080163 0.160908767349009 0.04607330017689],...
+    'Orientation','horizontal',...
+    'Interpreter','latex',...
+    'FontSize',25);
+legend('boxoff');
+set(gcf,'PaperPositionMode','auto')
+
+subplot(2,3,5)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, Tu_series, 'b-', 'LineWidth', 4); 
+plot(x, [ui; NaN], 'r--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+ylabel('\%','fontsize',20,'interpreter','latex')
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(e). Unemp. Insurance-to-GDP}','fontsize',23,'interpreter','latex')
+%ylim([0 8])
+ylim([0 6])
+xlim([1 length(x)])
+set(gcf,'PaperPositionMode','auto')
+
+subplot(2,3,6)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, G_series, 'b-', 'LineWidth', 4); 
+plot(x, [gov_exp; NaN], 'r--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+xtickangle(ax,0)
+ylabel('\%','fontsize',20,'interpreter','latex')
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 19;
+title('{(f). Gov. Expenditure-to-GDP}','fontsize',23,'interpreter','latex')
+%ylim([0 8])
+ylim([4.5 6.5])
+xlim([1 length(x)])
+%set(gcf,'PaperPositionMode','auto')
+print(gcf, '-dpng', 'C:/Users/Leonardo Barreto/Google Drive/GoodNotes/Fifth Year/JMP_inflation/output/figures_sw/f1_sw')
+
+return
+%% SECOND PLOT
+figure('WindowState','maximized','Color',[1 1 1]);
+% Panel (a) - Capital / Output_ss
+subplot(2,2,1)
+bar(6, 200, 1, 'FaceColor', [0.85 0.85 0.85], 'EdgeColor', 'none'); hold on
+plot(x, k_series, 'b-', 'LineWidth', 4);
+grid on
+xticks(1:4:T+T_extra)
+xticklabels(xtick_labels)
+xlim([1 length(x)])
+%ylabel('$k_t / y_{ss}$','fontsize',22,'interpreter','latex')
+title('{(a). Capital-to-Initial Output}','fontsize',25,'interpreter','latex')
+ax = gca;
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+ylim([4.2 4.35])
+
+% Panel (b) - Labor / Labor_ss
+subplot(2,2,2)
+bar(6, 200, 1, 'FaceColor', [0.85 0.85 0.85], 'EdgeColor', 'none'); hold on
+plot(x, n_series, 'b-', 'LineWidth', 4);
+grid on
+xticks(1:4:T+T_extra)
+xticklabels(xtick_labels)
+xlim([1 length(x)])
+%ylabel('$n_t / n_{ss}$','fontsize',22,'interpreter','latex')
+title('{(b). Effective Labor}','fontsize',25,'interpreter','latex')
+ax = gca;
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+ylim([0.85 1.05])
+
+% (c) GDP Growth (non-annualized)
+subplot(2,2,3)
+bar(6, 10, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+bar(6, -200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none');
+plot(x, gdp_growth_series(2:end), 'b-', 'LineWidth', 4);
+plot(x, [gdp_g-0.5; NaN], 'r--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([-14 8])
+title('{(c). GDP Growth}','fontsize',25,'interpreter','latex')
+ax = gca; ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+xlim([1 length(x)])
+
+% (d) Consumption Growth (non-annualized)
+subplot(2,2,4)
+bar(6, 10, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+bar(6, -200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none');
+p1 = plot(x, cons_growth_series(2:end), 'b-', 'LineWidth', 4);
+p2 = plot(x, [cons_g-0.5; NaN], 'r--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([-12 10])
+title('{(d). Consumption Growth}','fontsize',25,'interpreter','latex')
+ax = gca; ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+legend([p1 p2],'Model $\hspace{0.5em}$','Data$\hspace{0.5em}$');
+xlim([1 length(x)])
+set(legend,...
+    'Position',[0.440118532992161 0.0110994873080163 0.160908767349009 0.04607330017689],...
+    'Orientation','horizontal',...
+    'Interpreter','latex',...
+    'FontSize',25);
+legend('boxoff');
+%set(gcf,'PaperPositionMode','auto')
+print(gcf, '-dpng', 'C:/Users/Leonardo Barreto/Google Drive/GoodNotes/Fifth Year/JMP_inflation/output/figures_sw/f2_sw')
+
+%% THIRD PLOT
+figure('WindowState','maximized','Color',[1 1 1]);
+% (a) Interest Rate
+subplot(2,2,1)
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+bar(6, -200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none');
+plot(x, [r_series(1:5); NaN; r_series(7:end)], 'b-', 'LineWidth', 4);
+plot(x, [r_series(1:5); r_series(1); r_series(7:end)], 'b--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('\%','fontsize',22,'interpreter','latex')
+ylim([0.6 1.2])
+title('{(a). Interest Rate}','fontsize',25,'interpreter','latex')
+ax = gca; ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+xlim([1 length(x)])
+
+% (b) Wage Relative to SS
+subplot(2,2,2)
+bar(6, 10, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, w_series, 'b-', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('','fontsize',22,'interpreter','latex')
+ylim([0.98 1.05])
+title('{(b). Wage Rate}','fontsize',25,'interpreter','latex')
+ax = gca; ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+xlim([1 length(x)])
+
+% (e) Stimulus Checks
+subplot(2,2,3)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, T_series, 'b-', 'LineWidth', 4); 
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('\%','fontsize',20,'interpreter','latex')
+title('{(c). Stimulus Checks}','fontsize',25,'interpreter','latex')
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+ylim([0 8])
+
+% (f) Unemp. Insurance
+subplot(2,2,4)
+ax = gca;
+bar(6, 200, 1, 'FaceColor', [0.8 0.8 0.8], 'EdgeColor', 'none'); hold on
+plot(x, Tu_series, 'b-', 'LineWidth', 4); 
+plot(x, [ui; NaN], 'r--', 'LineWidth', 4);
+grid on
+xticks(1:4:T_total)
+xticklabels(xtick_labels)
+ylabel('\%','fontsize',20,'interpreter','latex')
+title('{(d). Unemployment Insurance}','fontsize',25,'interpreter','latex')
+ax.TickLabelInterpreter = 'latex'; ax.FontSize = 22;
+%ylim([0 8])
+ylim([0 6])
+set(gcf,'PaperPositionMode','auto')
+print(gcf, '-dpng', 'C:/Users/Leonardo Barreto/Google Drive/GoodNotes/Fifth Year/JMP_inflation/output/figures_sw/f3_sw')

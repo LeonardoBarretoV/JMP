@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Debt-Financed Fiscal Stimulus, Heterogeneity, and Welfare</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+@page { size: letter; margin: 21mm 19mm 20mm 19mm; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Latin Modern Roman","Georgia","Times New Roman",serif;
+       font-size: 10.7pt; line-height: 1.48; color: #111; margin: 0; }
+h1 { font-size: 17pt; text-align: center; margin: 0 0 2pt; line-height: 1.25; }
+.sub { text-align: center; font-size: 12pt; color: #333; margin: 0 0 4pt; }
+.auth { text-align: center; font-size: 11pt; margin: 10pt 0 2pt; }
+.date { text-align: center; font-size: 10pt; color: #444; margin: 0 0 18pt; }
+h2 { font-size: 13pt; margin: 20pt 0 7pt; border-bottom: 1px solid #bbb; padding-bottom: 2pt; }
+h3 { font-size: 11.3pt; margin: 14pt 0 5pt; }
+p  { margin: 0 0 7pt; text-align: justify; }
+.pp { font-weight: 700; }
+.abstract { font-size: 10pt; margin: 0 22pt 16pt; padding: 9pt 12pt;
+            background: #f6f6f6; border: 1px solid #ddd; text-align: justify; }
+.abstract .t { font-weight: 700; text-align: center; display: block; margin-bottom: 4pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.9pt; margin: 8pt 0 4pt;
+        page-break-inside: avoid; }
+caption { caption-side: top; font-size: 9.3pt; font-weight: 700; text-align: left;
+          padding-bottom: 4pt; }
+th, td { padding: 2.3pt 5pt; text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+thead th { border-top: 1.1px solid #222; border-bottom: 0.7px solid #222; }
+tbody tr:last-child td { border-bottom: 1.1px solid #222; }
+td.grp { text-align: left; font-style: italic; padding-top: 6pt; }
+tr.rule td, tr.rule th { border-top: 0.7px solid #666; }
+.note { font-size: 8.6pt; color: #333; margin: 3pt 0 12pt; text-align: justify; }
+.defn { background: #f0f0f0; border: 1px solid #ccc; padding: 10pt 13pt; margin: 10pt 0 12pt;
+        font-size: 10pt; page-break-inside: avoid; }
+.defn ul { margin: 6pt 0 2pt; padding-left: 20pt; }
+.defn li { margin-bottom: 3.5pt; }
+.katex-display { margin: 7pt 0; }
+.katex { font-size: 1.03em; }
+.avoid { page-break-inside: avoid; }
+.newpage { page-break-before: always; }
+</style>
+
+<h1>Debt-Financed Fiscal Stimulus, Heterogeneity, and Welfare</h1>
+<div class="sub">Model with Endogenous Inflation, and Counterfactual Results</div>
+<div class="auth">Leonardo Barreto</div>
+<div class="date">Wharton &middot; September 2026</div>
+
+<div class="abstract"><span class="t">Abstract</span>
+This document restates the model of the paper with the exogenous inflation assumption
+removed. Inflation is now determined inside the model by a sticky-wage block: a continuum
+of labor unions set nominal wages subject to a quadratic adjustment cost, households supply
+hours under proportional rationing, and a monetary authority follows a Taylor rule.
+Sections 1&ndash;3 are the model, equilibrium and calibration; Sections 4&ndash;5 report the
+counterfactual results under the extension, together with a decomposition of the one
+channel that the extension adds and the flexible-wage model does not have.
+</div>
+
+<h2>1. Model</h2>
+
+<p>I build an open economy heterogeneous agent model in the spirit of Bewley (1977),
+&#304;mrohoro&#287;lu (1989), Aiyagari (1994), and Huggett (1996). Time is discrete and indexed by
+<span class="mathi">t\in\{1,2,\dots\}</span>. There is no aggregate uncertainty. <b>Inflation is determined
+endogenously</b>: nominal wages are sticky, so the price level is pinned down jointly by a
+wage Phillips curve, a monetary policy rule and the Fisher equation. The economy is
+populated by domestic and foreign households, final good firms, a continuum of labor
+unions, a monetary authority, and a government. Domestic households consume final goods,
+supply labor at hours set by their union, face time-varying idiosyncratic income risk, and
+self-insure by saving and borrowing in capital and long-term nominal bonds. Foreign
+households also demand domestic bonds. Firms produce the final good using a
+constant-returns-to-scale technology with capital and labor as inputs. The government pays
+out transfers to households and finances its expenditures through labor and capital income
+taxes as well as bond issuance. I consider a perfect foresight transition sequence between
+an initial stationary equilibrium with a given stock of government debt and a new
+stationary equilibrium with a higher debt-to-GDP ratio following a one-time
+zero-probability shock.</p>
+
+<h3>1.1 Domestic Households</h3>
+
+<p><span class="pp">Preferences.</span> The economy is populated by a unit continuum of
+ex-ante identical households indexed by <span class="mathi">i\in[0,1]</span>. Household preferences are given by
+the following Epstein&ndash;Zin (1989) utility function:</p>
+<div class="mathd">V_{it}= \left\{(1-\beta)x_{it}^{1-1/\xi} + \beta \left[\mathbb{E}\left( V_{it+1}^{1-\gamma}\right) \right]^{\frac{1-1/\xi}{1-\gamma}} \right\}^{\frac{1}{1-1/\xi}},</div>
+<p>where <span class="mathi">\mathbb{E}</span> denotes the expectation operator over idiosyncratic states,
+<span class="mathi">\beta\in(0,1)</span> is the discount factor, <span class="mathi">\xi</span> is the elasticity of intertemporal
+substitution, <span class="mathi">\gamma</span> is the risk aversion coefficient, and <span class="mathi">x</span> is the
+Greenwood&ndash;Hercowitz&ndash;Huffman (1988) composite of consumption and labor:</p>
+<div class="mathd">x_{it} = c_{it} - \theta \frac{n_{it}^{1+1/\nu}}{1+1/\nu},</div>
+<p>where <span class="mathi">c_{it}</span> denotes consumption of the final good, sold at nominal price <span class="mathi">P_t</span>, and
+<span class="mathi">n_{it}</span> is labor supplied. The parameter <span class="mathi">\nu</span> controls the Frisch elasticity of labor
+supply and <span class="mathi">\theta</span> is a labor disutility parameter. The GHH composite plays a larger role
+here than in the flexible-wage version: because the marginal disutility of work is separable
+from consumption, the steady-state hours profile is independent of assets, which is what
+makes the proportional rationing scheme below internally consistent.</p>
+
+<p><span class="pp">Idiosyncratic income risk.</span> Let <span class="mathi">z_{it}\geq 0</span> be the
+idiosyncratic component of household <span class="mathi">i</span>'s income. It follows a Markov process with
+ergodic mean normalized to one, evolves according to a time-varying transition matrix
+<span class="mathi">\Omega_t</span>, and has an unemployment state in which <span class="mathi">z_{it}=0</span>. The U-U transition
+probability is <span class="mathi">P^{uu}_t \equiv \mathrm{Prob}(z_{it}=0\mid z_{it-1}=0)</span> and the E-E
+transition probability is <span class="mathi">P^{ee}_t \equiv \mathrm{Prob}(z_{it}&gt;0\mid z_{it-1}&gt;0)</span>. These
+probabilities capture the labor market dynamics since 2020.</p>
+
+<p><span class="pp">Hours under sticky wages.</span> This is the first point at which the
+model departs from the flexible-wage version. Nominal wages are set by unions, not by
+households, and hours are rationed <i>proportionally</i>: every employed household works the
+same fraction of its own steady-state hours. Let <span class="mathi">\tilde n(z)</span> denote the hours a household
+with productivity <span class="mathi">z</span> works in the initial stationary equilibrium, and let <span class="mathi">s_t</span> be a
+common, economy-wide <i>rationing index</i>. Then</p>
+<div class="mathd">n_{it} \;=\; s_t\,\tilde n(z_{it}),</div>
+<p>with <span class="mathi">\tilde n(0)=0</span>, so unemployed households supply no labor. Households take
+<span class="mathi">n_{it}</span> as given and choose only consumption and savings. Aggregate effective labor is</p>
+<div class="mathd">N_t \;=\; s_t \sum_{z} \Lambda_t(z)\, z\, \tilde n(z),</div>
+<p>where <span class="mathi">\Lambda_t(z)</span> is the date-<span class="mathi">t</span> marginal distribution of productivity.</p>
+
+<p>Proportional rationing is not an innocuous normalization. Under flexible wages, with the
+GHH composite and the HSV tax scheme below, the household's intratemporal condition delivers
+hours proportional to <span class="mathi">\tilde n(z)</span> with a factor that is <i>common across</i> <span class="mathi">z</span>: the
+productivity term <span class="mathi">z^{1-\tau}</span> cancels exactly. That common factor is</p>
+<div class="mathd">s^{\mathrm{flex}}_t \;=\; \left[\frac{\tau_t^n}{\tau^n_{ss}}\left(\frac{w_t}{w_{ss}}\right)^{1-\tau}\right]^{\frac{\nu}{1+\tau\nu}},</div>
+<p>so the family of hours profiles spanned by the rationing scheme contains every
+flexible-wage allocation. Setting <span class="mathi">s_t = s^{\mathrm{flex}}_t</span> recovers the flexible-wage
+model exactly, which nests the original paper as a limiting case and provides a direct
+numerical check on the extension.</p>
+
+<p><span class="pp">Budget and borrowing constraints.</span> Households receive
+<span class="mathi">W_tz_{it}n_{it}</span> in labor earnings, where <span class="mathi">W_t</span> is the nominal wage per efficiency unit.
+Labor income is taxed progressively according to a Heathcote&ndash;Storesletten&ndash;Violante
+(2017) scheme <span class="mathi">\mathcal{T}</span> depending on a rate <span class="mathi">\tau^n_t</span>. Households receive
+unemployment benefits <span class="mathi">P_tT^u_t</span> when unemployed and lump-sum transfers <span class="mathi">P_tT^s_t</span> if
+<span class="mathi">z_{it}&lt;\bar z</span>. They save in long-term nominal bonds and capital; with
+<span class="mathi">a_{it}=k_{it}+q_{t-1}b_{it}</span> and <span class="mathi">(1+r_t)</span> the equalized gross return for <span class="mathi">t&gt;0</span>:</p>
+<div class="mathd">c_{it} + a_{it+1} \leq  w_{t} z_{it} n_{it} + (1+r_t) a_{it} - \mathcal{T}(w_{t} z_{it} n_{it}) + T_{t}^u \mathbf{1}_{z_{it}=0} + T^s_{t} \mathbf{1}_{z_{it}&lt;\bar z}, \quad t&gt;0</div>
+<div class="mathd">c_{i0} + a_{i1} \leq  w_0 z_{i0} n_{i0} + (1+r_0^k) k_{i0} + (1+r_0^b) q_{-1} b_{i0} - \mathcal{T}(w_{0} z_{i0} n_{i0}) + T_{0}^u \mathbf{1}_{z_{i0}=0} + T^s_{0} \mathbf{1}_{z_{i0}&lt;\bar z}</div>
+<p>where <span class="mathi">w_t\equiv W_t/P_t</span>. A standard borrowing constraint applies:
+<span class="mathi">a_{it+1}\geq \underline{a}</span>.</p>
+
+<p><span class="pp">Lockdown constraints.</span> With rationing in place, the labor
+restriction becomes a <i>ceiling on the rationing index</i> rather than a household-level
+constraint: when <span class="mathi">\mathrm{lock}_t=1</span>,</p>
+<div class="mathd">s_t \;=\; \min\!\left\{\Gamma^n,\; s^{\mathrm{flex}}_t\right\}, \qquad c_{it} \;=\; \Gamma^c\, c^{ss}_i,</div>
+<p>so hours are capped at <span class="mathi">\Gamma^n\tilde n(z)</span> and the consumption restriction binds with
+equality at a common fraction <span class="mathi">\Gamma^c</span> of each household's steady-state consumption.
+This follows Fourakis (2024) and lets the model match the observed drop in output and
+consumption in 2020Q2. Whether the ceiling is the binding branch is not an assumption but an
+equilibrium object, and it is verified at every solution: if <span class="mathi">s^{\mathrm{flex}}_t</span> fell
+below <span class="mathi">\Gamma^n</span> the household and government blocks would book different hours and the
+solution would be invalid. Section 4 reports the realized margin for each column.</p>
+
+<p><span class="pp">Recursive formulation.</span> Let <span class="mathi">s\equiv\{z,a\}</span> be the idiosyncratic
+state. Hours no longer appear as a choice variable:</p>
+<div class="mathd">V_{t}(z,a) = \max_{c,\,a^\prime}  \left\{(1-\beta)x^{1-1/\xi} + \beta \left[\mathbb{E}\left( V_{t+1}(z^\prime, a^\prime)^{1-\gamma}\right) \right]^{\frac{1-1/\xi}{1-\gamma}} \right\}^{\frac{1}{1-1/\xi}}</div>
+<p>subject to the budget constraints above, <span class="mathi">n = s_t\,\tilde n(z)</span>,
+<span class="mathi">a^\prime\geq \underline{a}</span>, and the lockdown restriction.</p>
+
+<h3>1.2 Foreign Households, Firms</h3>
+<p>Foreign households demand government bonds, the only form of international capital flows:
+<span class="mathi">B_{t+1}^\star = \Psi_t q_t^{-\chi}</span>, where <span class="mathi">\chi&gt;0</span> governs the elasticity of foreign
+demand with respect to the bond price and <span class="mathi">\Psi_t</span> is an exogenous shifter. The final good
+is produced competitively with <span class="mathi">F(K_t,L_t) = Z K_t^\alpha L_t^{1-\alpha}</span>; firms hire labor
+at <span class="mathi">w_t</span>, rent capital at <span class="mathi">\hat r^k_t</span>, and pay a proportional tax <span class="mathi">\tau^k_t</span> on capital
+factor payments, so <span class="mathi">F_K = (1+\tau^k_t)\hat r^k_t</span> and <span class="mathi">F_L = w_t</span>.</p>
+
+<h3>1.3 Labor Unions and Wage Setting</h3>
+
+<p>This block is new relative to the published version of the model and is what makes
+inflation endogenous.</p>
+
+<p><span class="pp">Structure.</span> There is a continuum of labor tasks. Each task is
+organized by a union that represents all households, and every household supplies the same
+proportion of every task, which is what delivers proportional rationing. Union <span class="mathi">j</span> sets the
+nominal wage for its task and faces a quadratic cost of adjusting it, as in Rotemberg (1982).
+The structure follows Erceg&ndash;Henderson&ndash;Levin (2000) and its heterogeneous-agent
+implementation in Auclert&ndash;Rognlie&ndash;Straub (2024). Unions maximize the average
+utility of their members net of the adjustment cost. I express the adjustment cost in utility
+units; it therefore does not appear in the goods resource constraint, so measured output and
+consumption are unaffected by it.</p>
+
+<p><span class="pp">Wage inflation.</span> Define nominal wage inflation as</p>
+<div class="mathd">1+\pi^w_t \;\equiv\; \frac{W_t}{W_{t-1}} \;=\; (1+\pi_t)\,\frac{w_t}{w_{t-1}},</div>
+<p>which follows from <span class="mathi">w_t = W_t/P_t</span> and <span class="mathi">1+\pi_t = P_t/P_{t-1}</span>. This is the bridge
+between the real wage the firm block prices and the nominal rigidity the union faces: it is
+the only place inflation enters the real side of the model.</p>
+
+<p><span class="pp">The wage Phillips curve.</span> Let <span class="mathi">\lambda_{it}</span> be the marginal
+utility of the GHH composite, which for the Epstein&ndash;Zin recursion is</p>
+<div class="mathd">\lambda_{it} \;=\; \frac{\partial V_{it}}{\partial x_{it}} \;=\; (1-\beta)\, V_{it}^{1/\xi}\, x_{it}^{-1/\xi},</div>
+<p>and let <span class="mathi">\rho_{it}</span> be the marginal retention rate implied by the HSV scheme,</p>
+<div class="mathd">\rho_{it} \;=\; (1-\tau)\,\tau^n_t\,\bigl(w_t z_{it} n_{it}\bigr)^{-\tau},</div>
+<p>so <span class="mathi">\rho_{it} w_t z_{it}</span> is the marginal after-tax real wage. The union's first order
+condition delivers the Rotemberg wage Phillips curve</p>
+<div class="mathd">\boxed{\;(\pi^w_t - \bar\pi)(1+\pi^w_t) \;=\; \frac{\kappa_w}{w_{ss}\mathcal{Y}_{ss}}\,\Xi_t \;+\; \beta\,(\pi^w_{t+1} - \bar\pi)(1+\pi^w_{t+1})\;}</div>
+<p>where <span class="mathi">\bar\pi</span> is the inflation target, <span class="mathi">\kappa_w</span> governs wage stickiness, and
+<span class="mathi">\Xi_t</span> is the utility-weighted <i>labor wedge</i></p>
+<div class="mathd">\Xi_t \;=\; \int_i \lambda_{it}\, n_{it} \Bigl[\;\underbrace{\theta\, n_{it}^{1/\nu}}_{\text{marginal disutility}} \;-\; \underbrace{\rho_{it}\, w_t\, z_{it}}_{\text{marginal after-tax wage}}\;\Bigr] di.</div>
+<p>The wedge is the gap between the marginal rate of substitution between leisure and
+consumption and the marginal after-tax real wage, weighted by each household's marginal
+utility and hours. When the wedge is zero, households are at their intratemporal optimum and
+wage inflation equals its target; when households would like to work more than the union has
+contracted at the going wage, the wedge is negative and wage inflation falls below target.
+Substituting the rationing scheme and separating the terms that depend on <span class="mathi">s_t</span> gives the
+form used in computation,</p>
+<div class="mathd">\Xi_t \;=\; s_t\Bigl[\theta\, s_t^{1/\nu}\,\mathcal{D}_t - w_t\,\mathcal{Y}_t\Bigr], \qquad \mathcal{D}_t \equiv \int_i \lambda_{it}\,\tilde n(z_{it})^{1+1/\nu} di, \qquad \mathcal{Y}_t \equiv \int_i \lambda_{it}\,\rho_{it}\, z_{it}\, \tilde n(z_{it})\, di,</div>
+<p>where <span class="mathi">\mathcal{D}_t</span> and <span class="mathi">\mathcal{Y}_t</span> are built from the steady-state hours profile
+<span class="mathi">\tilde n(z)</span> and all dependence on <span class="mathi">s_t</span> is explicit. Both integrals run over employed
+households only; the unemployed contribute nothing, and <span class="mathi">\rho_{it}</span> is not defined at
+<span class="mathi">z=0</span>. The normalization by <span class="mathi">w_{ss}\mathcal{Y}_{ss}</span> makes <span class="mathi">\kappa_w</span> a dimensionless
+elasticity. In the initial stationary equilibrium <span class="mathi">s=1</span> and <span class="mathi">\theta=1</span>, so
+<span class="mathi">\Xi_{ss} = \mathcal{D}_{ss} - w_{ss}\mathcal{Y}_{ss} = 0</span>: the wedge vanishes and the
+Phillips curve reduces to <span class="mathi">\pi^w = \bar\pi</span>, as it must.</p>
+
+<h3>1.4 Monetary Policy</h3>
+
+<p>A monetary authority sets the nominal interest rate <span class="mathi">i_t</span> between <span class="mathi">t</span> and <span class="mathi">t+1</span>
+according to a Taylor (1993) rule,</p>
+<div class="mathd">i_t \;=\; i^\star + \phi_\pi\,(\pi_t - \bar\pi) + \varepsilon^m_t, \qquad \phi_\pi &gt; 1,</div>
+<p>where <span class="mathi">i^\star</span> is the intercept and <span class="mathi">\varepsilon^m_t</span> a monetary policy shock. The
+nominal rate is linked to the real return by the Fisher equation,</p>
+<div class="mathd">1 + i_t \;=\; (1+r_{t+1})(1+\pi_{t+1}).</div>
+<p>Consistency of the rule with the terminal stationary equilibrium requires that the
+intercept satisfy Fisher at that point: with <span class="mathi">\pi=\bar\pi</span>, <span class="mathi">r=r_f</span> and
+<span class="mathi">\varepsilon^m\to0</span>,</p>
+<div class="mathd">i^\star \;=\; (1+r_f)(1+\bar\pi) - 1.</div>
+<p>This restriction matters for the counterfactuals. Any experiment that changes the terminal
+real rate <span class="mathi">r_f</span> changes the right-hand side, and therefore changes
+<span class="mathi">i^\star + \varepsilon^m_\infty</span>. Section 5 isolates the effect of that shift.</p>
+
+<p><span class="pp">Determinacy and the backward recursion.</span> Combining the rule and
+Fisher and solving for <span class="mathi">\pi_t</span>,</p>
+<div class="mathd">\pi_t \;=\; \bar\pi + \frac{(1+r_{t+1})(1+\pi_{t+1}) - 1 - i^\star - \varepsilon^m_t}{\phi_\pi}.</div>
+<p>Given the path of real returns and the terminal condition <span class="mathi">\pi_T=\bar\pi</span>, this
+determines the entire inflation path by backward recursion. The map contracts at rate
+<span class="mathi">(1+r)/\phi_\pi \approx 0.67</span> precisely because <span class="mathi">\phi_\pi&gt;1</span>, so the Taylor principle
+delivers a unique bounded solution constructively rather than merely ruling out
+indeterminacy. Two features shape the results below. First, <span class="mathi">i^\star</span> and
+<span class="mathi">\varepsilon^m_t</span> enter only through their <i>sum</i>, so the intercept and the shock are
+not separately identified: they are one instrument, not two. Second, the fixed point under a
+constant <span class="mathi">C \equiv i^\star + \varepsilon^m</span> is</p>
+<div class="mathd">\pi^\ast \;=\; \bar\pi + \frac{(1+r_f)(1+\bar\pi)-1-C}{\phi_\pi - 1 - r_f},</div>
+<p>which equals <span class="mathi">\bar\pi</span> if and only if the Fisher restriction holds. A deviation <span class="mathi">d</span> in
+the rule constant therefore shifts inflation along the transition by
+<span class="mathi">-d/(\phi_\pi-1-r_f)</span>, an object used directly in Section 5.</p>
+
+<h3>1.5 Asset Structure and Government</h3>
+
+<p>There are two assets: a long-term nominal bond and capital. Let
+<span class="mathi">\pi_t\equiv P_t/P_{t-1}-1</span>, now an endogenous object. As in Hatchondo&ndash;Mart&iacute;nez
+(2009), a bond issued in <span class="mathi">t</span> promises
+<span class="mathi">(\bar i+\vartheta)(1-\vartheta)^{j-1}/(1+\pi_{t+j})</span> units of the final good in <span class="mathi">t+j</span>,
+where <span class="mathi">\bar i</span> makes the bond price one in the initial steady state and <span class="mathi">\vartheta</span>
+controls maturity. Returns are</p>
+<div class="mathd">1 + r_{t}^b = \frac{ (\bar{i} + \vartheta)/(1+\pi_{t}) + [(1-\vartheta)/(1+\pi_{t})] q_{t}}{q_{t-1}}, \qquad 1 + r_{t}^k = 1 + \hat{r}_t^k - \delta,</div>
+<p>and no-arbitrage equates them for <span class="mathi">t&gt;0</span>. Because the bond is nominal and long-term, the
+first expression is the channel through which endogenous inflation redistributes: an
+inflation path below what was expected raises the real value of coupon payments and transfers
+resources to bondholders. This channel is absent when inflation is exogenous and fixed at
+<span class="mathi">\bar\pi</span>, and it accounts for the largest single discrepancy between the extension and the
+published results.</p>
+
+<p>The government taxes labor income through the Heathcote&ndash;Storesletten&ndash;Violante
+schedule</p>
+<div class="mathd">\mathcal{T}(w_{t} z_{it} n_{it}) = w_t z_{it} n_{it} - \tau_t^n (w_t z_{it} n_{it})^{1-\tau},</div>
+<p>where <span class="mathi">\tau^n_t</span> is a <i>retention level</i>: a lower <span class="mathi">\tau^n_t</span> means a heavier tax
+burden, and <span class="mathi">\tau^n_t&gt;1</span> is a net labor subsidy. It is the residual instrument balancing the
+budget each period. The government also levies <span class="mathi">\tau^k_t</span> on gross capital returns
+(negative during the pandemic, a subsidy to firms), pays unemployment insurance <span class="mathi">T^u_t</span> and
+lump-sum transfers <span class="mathi">T^s_t</span>, and consumes <span class="mathi">G_t</span>. Its budget constraint is</p>
+<div class="mathd">\tau_t^k \hat{r}_t^k K_t + q_t \ell_t + \int_i\mathcal{T}(w_{t} z_{it} n_{it})\, di = \left(\frac{\bar{i} + \vartheta}{1+\pi_t}\right) B_t + \int_i T_{t}^s \mathbf{1}_{z_{it}&lt;\bar z}\, di + \int_iT_{t}^u \mathbf{1}_{z_{it}=0}\, di + G_t</div>
+<p>with <span class="mathi">\ell_t = B_{t+1}-[(1-\vartheta)/(1+\pi_t)]B_t</span>. Inflation now enters the
+government's problem endogenously through the real coupon
+<span class="mathi">(\bar i+\vartheta)/(1+\pi_t)</span>: the debt is nominal, so the inflation path determines how
+much of the stimulus is financed by erosion of the real value of outstanding debt rather than
+by taxation.</p>
+
+<p><span class="pp">Market clearing.</span> Labor market clearing is <span class="mathi">N_t = L_t</span>; asset
+market clearing is <span class="mathi">\mathcal{A}_{t} =  q_{t-1}(B_{t} - B_t^\star) + K_{t}</span> for <span class="mathi">t&gt;0</span>; and
+the goods resource constraint is
+<span class="mathi">F(K_t, N_t) = \mathcal{C}_t + I_t + G_t + NX_t</span> with
+<span class="mathi">I_t\equiv K_{t+1}-(1-\delta)K_t</span> and
+<span class="mathi">NX_t\equiv q_tB^\star_{t+1}-(1+r_t)q_{t-1}B^\star_t</span>. The wage adjustment cost does not
+enter the resource constraint.</p>
+
+<h2>2. Equilibrium</h2>
+
+<div class="defn">
+<b>Definition 1</b> (Competitive Equilibrium). <i>Given an initial distribution of household
+assets and idiosyncratic productivities, a sequence of transition matrices
+<span class="mathi">\{\Omega_t\}</span>, a government policy composed of a fiscal policy
+<span class="mathi">\{B_t,\tau^n_t,\tau^k_t,T^s_t,T^u_t,G_t\}</span>, a monetary policy
+<span class="mathi">\{\phi_\pi,\bar\pi,i^\star,\varepsilon^m_t\}</span> and a lockdown policy
+<span class="mathi">\{\mathrm{lock}_t\}</span>, an equilibrium is a sequence of aggregates
+<span class="mathi">\{\mathcal{A}_t,B^\star_t,K_t,N_t,Y_t,\mathcal{C}_t,s_t\}</span> and prices
+<span class="mathi">\{q_t,r^b_t,r^k_t,w_t,\pi_t,\pi^w_t,i_t\}</span> such that:</i>
+<ul>
+<li>Given prices, transition matrices, the rationing index and government policy, households
+optimize</li>
+<li>Given prices and government policy, firms optimize</li>
+<li><b>Unions optimize: the wage Phillips curve holds at every date, with the wedge evaluated
+at the equilibrium distribution</b></li>
+<li><b>The monetary authority follows the Taylor rule, the Fisher equation holds, and the
+intercept satisfies the Fisher restriction at the terminal stationary equilibrium</b></li>
+<li><b>Hours are consistent with proportional rationing in both the household and the
+government block</b></li>
+<li>The sequential government budget constraint is satisfied</li>
+<li>The no-arbitrage condition is satisfied for <span class="mathi">t&gt;0</span></li>
+<li>Markets clear</li>
+</ul>
+</div>
+
+<p>A stationary equilibrium is an equilibrium in which all sequences are constant over time.
+Relative to the flexible-wage version, the equilibrium system gains one equation per date,
+the Phillips curve, and one unknown per date, the rationing index <span class="mathi">s_t</span>; inflation is then
+recovered from the backward recursion. The bolded conditions are the new ones. The fifth is
+not redundant: the household block and the government's tax base must book the same hours,
+and it is checked at every date in the numerical solution, since a violation would mean the
+labor tax revenue implied by the household distribution differs from what the budget
+constraint records.</p>
+
+<h2>3. Calibration</h2>
+
+<p>The model is calibrated to the U.S. economy using quarterly data spanning 2019 to 2024.
+The initial stationary equilibrium uses 2019Q1&ndash;2019Q4. The transition path begins in
+2020Q2, coinciding with the onset of the pandemic and the expansion of federal government
+debt, and I use observed time series through 2024Q4 to discipline the evolution of key
+aggregates. The table separates parameters inherited from the published calibration from the
+three the sticky-wage block adds.</p>
+
+<table class="avoid">
+<caption>Table 1: Calibration</caption>
+<thead><tr><th>Parameter</th><th style="text-align:left">Description</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td colspan="3" class="grp">Preferences and technology (unchanged)</td></tr>
+<tr><td><span class="mathi">\beta</span></td><td style="text-align:left">Discount factor</td><td>0.988043</td></tr>
+<tr><td><span class="mathi">\xi</span></td><td style="text-align:left">Elasticity of intertemporal substitution</td><td>1.00</td></tr>
+<tr><td><span class="mathi">\gamma</span></td><td style="text-align:left">Risk aversion</td><td>4.00</td></tr>
+<tr><td><span class="mathi">\nu</span></td><td style="text-align:left">Frisch elasticity of labor supply</td><td>1.00</td></tr>
+<tr><td><span class="mathi">\theta</span></td><td style="text-align:left">Labor disutility</td><td>1.00</td></tr>
+<tr><td><span class="mathi">\alpha</span></td><td style="text-align:left">Capital share</td><td>0.33</td></tr>
+<tr><td><span class="mathi">\delta</span></td><td style="text-align:left">Depreciation (quarterly)</td><td>0.014292</td></tr>
+<tr><td><span class="mathi">Z</span></td><td style="text-align:left">Productivity</td><td>0.105810</td></tr>
+<tr><td><span class="mathi">\underline{a}</span></td><td style="text-align:left">Borrowing limit</td><td>&minus;0.02</td></tr>
+<tr><td><span class="mathi">\chi</span></td><td style="text-align:left">Elasticity of foreign bond demand</td><td>0.44</td></tr>
+<tr><td><span class="mathi">\tau</span></td><td style="text-align:left">HSV progressivity</td><td>0.181</td></tr>
+<tr><td><span class="mathi">P^{ee},P^{uu}</span></td><td style="text-align:left">Steady-state labor market transitions</td><td>0.975, 0.400</td></tr>
+<tr class="rule"><td colspan="3" class="grp">Sticky-wage and monetary block (new)</td></tr>
+<tr><td><span class="mathi">\kappa_w</span></td><td style="text-align:left">Slope of the wage Phillips curve</td><td>0.05</td></tr>
+<tr><td><span class="mathi">\phi_\pi</span></td><td style="text-align:left">Taylor rule response to inflation</td><td>1.50</td></tr>
+<tr><td><span class="mathi">\bar\pi</span></td><td style="text-align:left">Inflation target (annualized)</td><td>2.00%</td></tr>
+<tr><td><span class="mathi">i^\star</span></td><td style="text-align:left">Rule intercept, from Fisher (annualized)</td><td>3.0994%</td></tr>
+<tr class="rule"><td colspan="3" class="grp">Lockdown, 2020Q2 (unchanged targets)</td></tr>
+<tr><td><span class="mathi">\Gamma^n</span></td><td style="text-align:left">Hours ceiling, fraction of steady-state hours</td><td>0.902301</td></tr>
+<tr><td><span class="mathi">\Gamma^c</span></td><td style="text-align:left">Consumption restriction, fraction of steady state</td><td>0.922960</td></tr>
+<tr class="rule"><td colspan="3" class="grp">Initial stationary equilibrium (implied)</td></tr>
+<tr><td><span class="mathi">r_{ss}</span></td><td style="text-align:left">Real rate (annualized)</td><td>0.9842%</td></tr>
+<tr><td><span class="mathi">w_{ss}</span></td><td style="text-align:left">Real wage</td><td>0.095539</td></tr>
+<tr><td><span class="mathi">\tau^n_{ss}</span></td><td style="text-align:left">HSV retention level</td><td>0.886550</td></tr>
+<tr><td><span class="mathi">\tau^k_{ss}</span></td><td style="text-align:left">Capital income tax</td><td>0.137931</td></tr>
+<tr><td><span class="mathi">r_f</span></td><td style="text-align:left">Terminal real rate, baseline (annualized)</td><td>1.0778%</td></tr>
+</tbody></table>
+
+<p>The monetary shock path <span class="mathi">\{\varepsilon^m_t\}</span> is not a free parameter. It is recovered as
+the residual of the Taylor rule evaluated at the solved real rate path and the <i>observed</i>
+inflation series, so that the baseline transition reproduces measured inflation by
+construction:</p>
+<div class="mathd">\varepsilon^m_t \;=\; \bigl[(1+r_{t+1})(1+\pi^{\mathrm{data}}_{t+1}) - 1\bigr] \;-\; i^\star \;-\; \phi_\pi\bigl(\pi^{\mathrm{data}}_t - \bar\pi\bigr).</div>
+<p>This is the natural analogue of the exogenous inflation assumption in the published model:
+rather than imposing the inflation path directly, I impose the monetary shocks that generate
+it, which lets the model speak to how much of observed inflation the fiscal and foreign
+blocks can account for on their own. The answer, below, is very little.</p>
+
+<h2 class="newpage">4. Counterfactual Results</h2>
+
+<p>I consider four counterfactuals, each holding the monetary rule and the monetary shocks
+fixed and changing one element of the fiscal or external environment. Welfare is measured as
+a consumption-equivalent (CE) gain at the announcement date relative to the pre-stimulus
+stationary equilibrium.</p>
+
+<p><span class="pp">The monetary rule is held fixed across columns.</span> Because
+<span class="mathi">i^\star</span> and <span class="mathi">\varepsilon^m_t</span> enter the recursion only as their sum, the object that
+must be held fixed is the rule constant <span class="mathi">C_t \equiv i^\star + \varepsilon^m_t</span>. Two of the
+four counterfactuals move the terminal real rate and therefore the value the constant must
+take in the far tail. I hold <span class="mathi">C_t</span> at its baseline value for <span class="mathi">t \leq 600</span> quarters and
+let it revert to the counterfactual's own Fisher-consistent value thereafter. Since
+<span class="mathi">\beta^{600}=7.3\times10^{-4}</span>, this has no effect on announcement-date welfare, while
+keeping the terminal condition <span class="mathi">\pi_T=\bar\pi</span> exactly consistent. Under this specification
+the rule constant is numerically identical across all four columns at every date
+<span class="mathi">t=2,\dots,600</span>.</p>
+
+<table class="avoid">
+<caption>Table 2: The monetary rule by column</caption>
+<thead><tr><th>Column</th><th><span class="mathi">i^\star</span> (ann.)</th><th><span class="mathi">\phi_\pi</span></th><th><span class="mathi">r_f</span> (ann.)</th><th>Constant adjustment</th></tr></thead>
+<tbody>
+<tr><td>Baseline</td><td>3.0994%</td><td>1.50</td><td>1.0778%</td><td>none</td></tr>
+<tr><td>No capital subsidies</td><td>3.0994%</td><td>1.50</td><td>1.0778%</td><td>none</td></tr>
+<tr><td>Lower foreign demand</td><td>3.1531%</td><td>1.50</td><td>1.1305%</td><td><span class="mathi">t&gt;600</span> only</td></tr>
+<tr><td>Only stimulus checks</td><td>3.0994%</td><td>1.50</td><td>1.0778%</td><td>none</td></tr>
+<tr><td>CBO debt projections</td><td>3.4495%</td><td>1.50</td><td>1.4211%</td><td><span class="mathi">t&gt;600</span> only</td></tr>
+</tbody></table>
+
+<p><span class="pp">Welfare groups.</span> Groups are defined by quantiles of the asset grid
+weighted by the invariant wealth distribution of the initial stationary equilibrium. Because
+a mass of households sits exactly at the borrowing constraint, the realized masses are not
+exact deciles: the bottom bin holds 15.3% of households rather than 10%, and the bins above
+it are each shifted up by roughly five percentage points. &ldquo;Poor&rdquo; is therefore the
+bottom 15.3%, &ldquo;Middle&rdquo; spans about the 44th to 63rd percentile, and
+&ldquo;Rich&rdquo; is the top 9.3%. I report the labels of the published table for
+comparability, with this correction noted.</p>
+
+<table class="avoid">
+<caption>Table 3: Consumption-equivalent welfare gains (%)</caption>
+<thead><tr><th></th><th>Baseline</th><th>No capital<br>subsidies</th><th>Lower foreign<br>demand</th><th>Only stimulus<br>checks</th><th>CBO debt<br>projections</th></tr></thead>
+<tbody>
+<tr><td colspan="6" class="grp">(a) Levels, against the pre-stimulus steady state</td></tr>
+<tr><td>Overall mean</td><td>1.910</td><td>2.106</td><td>1.236</td><td>4.449</td><td>2.245</td></tr>
+<tr><td>Overall minimum</td><td>&minus;5.383</td><td>&minus;6.096</td><td>&minus;10.063</td><td>&minus;7.251</td><td>&minus;3.092</td></tr>
+<tr><td>Poor (bottom 10%)</td><td>3.350</td><td>4.085</td><td>2.229</td><td>8.929</td><td>3.844</td></tr>
+<tr><td>Middle (40&ndash;60%)</td><td>2.043</td><td>2.314</td><td>1.350</td><td>4.422</td><td>2.294</td></tr>
+<tr><td>Rich (top 10%)</td><td>&minus;0.325</td><td>&minus;1.848</td><td>&minus;0.215</td><td>&minus;2.037</td><td>0.369</td></tr>
+<tr class="rule"><td colspan="6" class="grp">(b) Difference from the baseline (pp)</td></tr>
+<tr><td>Overall mean</td><td>&mdash;</td><td>+0.196</td><td>&minus;0.674</td><td>+2.539</td><td>+0.334</td></tr>
+<tr><td>Overall minimum</td><td>&mdash;</td><td>&minus;0.713</td><td>&minus;4.680</td><td>&minus;1.868</td><td>+2.291</td></tr>
+<tr><td>Poor (bottom 10%)</td><td>&mdash;</td><td>+0.735</td><td>&minus;1.121</td><td>+5.579</td><td>+0.494</td></tr>
+<tr><td>Middle (40&ndash;60%)</td><td>&mdash;</td><td>+0.271</td><td>&minus;0.693</td><td>+2.378</td><td>+0.251</td></tr>
+<tr><td>Rich (top 10%)</td><td>&mdash;</td><td>&minus;1.523</td><td>+0.110</td><td>&minus;1.712</td><td>+0.694</td></tr>
+<tr class="rule"><td colspan="6" class="grp">(c) Published values, flexible-wage model</td></tr>
+<tr><td>Overall mean</td><td>1.82</td><td>2.02</td><td>1.22</td><td>4.29</td><td>2.51</td></tr>
+<tr><td>Overall minimum</td><td>&minus;1.77</td><td>&minus;6.18</td><td>&minus;3.72</td><td>&minus;5.80</td><td>&minus;1.27</td></tr>
+<tr><td>Poor (bottom 10%)</td><td>3.03</td><td>3.77</td><td>2.03</td><td>8.60</td><td>4.00</td></tr>
+<tr><td>Middle (40&ndash;60%)</td><td>2.00</td><td>2.27</td><td>1.34</td><td>4.28</td><td>2.62</td></tr>
+<tr><td>Rich (top 10%)</td><td>&minus;0.20</td><td>&minus;1.69</td><td>0.06</td><td>&minus;1.90</td><td>0.50</td></tr>
+</tbody></table>
+
+<p><span class="pp">Reading Table 3.</span> On every average, the extension reproduces the
+published levels closely: the overall mean is within 0.02 to 0.27 percentage points across
+all five columns, Middle within 0.33, Rich within 0.28, and Poor within 0.33. The ranking and
+sign pattern of the published table survive: removing the capital subsidies raises average
+welfare while making the rich substantially worse off; a weaker foreign demand for government
+debt lowers welfare throughout; a stimulus package consisting of checks alone is far more
+progressive; and matching the CBO debt path raises welfare relative to the realized path.</p>
+
+<p>The exception is the <i>Overall minimum</i> row, which I do not regard as reconciled. That
+statistic is the CE gain of a single <span class="mathi">(a,z)</span> cell with positive mass, so it is far more
+sensitive to the specification than any average. The extension puts it at &minus;5.383 in the
+baseline against &minus;1.77 in the published model, and at &minus;10.063 against &minus;3.72
+under lower foreign demand, while matching to 0.08 under no capital subsidies. The direction
+is intuitive &mdash; with sticky wages, the households worst hit by the rationing of hours
+have no margin on which to adjust &mdash; but I have not isolated the mechanism, and the row
+should be read as an artifact of the extension rather than a result.</p>
+
+<p><span class="pp">What the extension adds.</span> Table 4 reports the objects the
+flexible-wage model cannot produce. The interpretation of the last column requires care.
+Because <span class="mathi">\varepsilon^m_t</span> is recovered so that the baseline matches measured inflation, the
+peak deviation of about 6.8 percentage points is the deviation <i>in the data</i>, not an
+endogenous model response. What the extension generates on its own is the difference across
+columns, and that is small: at most +0.15 percentage points at 2022Q2, under lower foreign
+demand. Absent monetary shocks, the fiscal and external blocks of this model move inflation
+very little &mdash; which is the central quantitative finding of the extension.</p>
+
+<table class="avoid">
+<caption>Table 4: Inflation and real rates under the extension</caption>
+<thead><tr><th>Column</th><th><span class="mathi">\pi</span> 2022Q2<br>(ann. %)</th><th>vs base<br>(pp)</th><th><span class="mathi">r</span> at <span class="mathi">t=20</span><br>(ann. %)</th><th>vs base<br>(pp)</th><th>Peak <span class="mathi">\pi</span> dev.<br>from target (pp)</th></tr></thead>
+<tbody>
+<tr><td>Baseline</td><td>9.0600</td><td>&mdash;</td><td>0.9862</td><td>&mdash;</td><td>+6.7823</td></tr>
+<tr><td>No capital subsidies</td><td>9.0624</td><td>+0.0022</td><td>0.9878</td><td>+0.0016</td><td>+6.7845</td></tr>
+<tr><td>Lower foreign demand</td><td>9.2212</td><td>+0.1510</td><td>1.0530</td><td>+0.0663</td><td>+6.9333</td></tr>
+<tr><td>Only stimulus checks</td><td>9.0679</td><td>+0.0074</td><td>0.9928</td><td>+0.0065</td><td>+6.7898</td></tr>
+<tr><td>CBO debt projections</td><td>9.1248</td><td>+0.0607</td><td>1.1086</td><td>+0.1215</td><td>+6.8430</td></tr>
+</tbody></table>
+<div class="note">The peak deviation occurs at 2022Q2 in every column. Terminal inflation
+returns to the 2% target in all five runs. The labor tax retention level <span class="mathi">\tau^n</span> at the
+announcement date is 0.8919 in the baseline, 1.3583 under no capital subsidies (a net labor
+subsidy), 0.8283 under lower foreign demand, 0.8950 under only stimulus checks and 0.9456
+under the CBO debt path.</div>
+
+<p><span class="pp">Solution diagnostics.</span> Table 5 records the numerical status of each
+column. The &ldquo;hours gate&rdquo; is the consistency check required by the fifth condition
+of Definition 1: the labor tax revenue implied by integrating the household distribution
+against the HSV schedule, compared with what the government budget constraint records. It
+holds to a relative <span class="mathi">1.6\times10^{-7}</span> in every column, which is the mass normalization
+error of the distribution rather than an error in the block. The &ldquo;lockdown
+margin&rdquo; reports <span class="mathi">s^{\mathrm{flex}}_0/\Gamma^n - 1</span>: it is positive everywhere, so the
+ceiling is the binding branch at the announcement date in every column, as required. All five
+columns deliver the same 8.4002% fall in 2020Q2 output, since <span class="mathi">s_0=\Gamma^n</span> by
+construction.</p>
+
+<table class="avoid">
+<caption>Table 5: Solution diagnostics</caption>
+<thead><tr><th>Column</th><th>Iterations</th><th>Wall (min)</th><th>Residual</th><th>Hours gate</th><th>Lockdown margin</th></tr></thead>
+<tbody>
+<tr><td>Baseline</td><td>1</td><td>0.19</td><td><span class="mathi">7.9\times10^{-6}</span></td><td><span class="mathi">1.6\times10^{-7}</span></td><td>+14.78%</td></tr>
+<tr><td>No capital subsidies</td><td>37</td><td>6.80</td><td><span class="mathi">4.7\times10^{-6}</span></td><td><span class="mathi">1.6\times10^{-7}</span></td><td>+63.90%</td></tr>
+<tr><td>Lower foreign demand</td><td>44</td><td>8.22</td><td><span class="mathi">8.8\times10^{-6}</span></td><td><span class="mathi">1.6\times10^{-7}</span></td><td>+7.82%</td></tr>
+<tr><td>Only stimulus checks</td><td>40</td><td>6.62</td><td><span class="mathi">9.5\times10^{-6}</span></td><td><span class="mathi">1.6\times10^{-7}</span></td><td>+15.12%</td></tr>
+<tr><td>CBO debt projections</td><td>86</td><td>16.11</td><td><span class="mathi">9.5\times10^{-6}</span></td><td><span class="mathi">1.6\times10^{-7}</span></td><td>+20.61%</td></tr>
+</tbody></table>
+
+<p><span class="pp">Distributional detail.</span> Table 6 gives the full profile. The pattern
+that distinguishes the columns is the behavior of the top bin. Removing the capital subsidies
+and moving to checks alone both impose large losses on the top decile (&minus;1.52 and
+&minus;1.71 percentage points relative to the baseline) while benefiting every other bin. The
+CBO debt path is the only counterfactual that raises welfare at the top, and it does so by
+more than it raises welfare in the middle &mdash; a pattern the next section attributes to a
+specific channel.</p>
+
+<table class="avoid">
+<caption>Table 6: Difference from baseline by wealth bin (pp)</caption>
+<thead><tr><th>Bin</th><th>Realized mass</th><th>No capital</th><th>Lower foreign</th><th>Only stimulus</th><th>CBO debt</th></tr></thead>
+<tbody>
+<tr><td>1 (poorest)</td><td>15.26%</td><td>+0.7355</td><td>&minus;1.1208</td><td>+5.5787</td><td>+0.4940</td></tr>
+<tr><td>2</td><td>10.16%</td><td>+0.7042</td><td>&minus;1.0562</td><td>+4.6131</td><td>+0.4555</td></tr>
+<tr><td>3</td><td>9.53%</td><td>+0.5124</td><td>&minus;0.9303</td><td>+3.9600</td><td>+0.4334</td></tr>
+<tr><td>4</td><td>9.27%</td><td>+0.4122</td><td>&minus;0.8219</td><td>+3.2314</td><td>+0.3855</td></tr>
+<tr><td>5</td><td>9.08%</td><td>+0.3064</td><td>&minus;0.7371</td><td>+2.6653</td><td>+0.2965</td></tr>
+<tr><td>6</td><td>9.25%</td><td>+0.2350</td><td>&minus;0.6484</td><td>+2.0915</td><td>+0.2046</td></tr>
+<tr><td>7</td><td>9.40%</td><td>+0.1353</td><td>&minus;0.5404</td><td>+1.5240</td><td>+0.1186</td></tr>
+<tr><td>8</td><td>9.31%</td><td>+0.0674</td><td>&minus;0.4235</td><td>+0.9656</td><td>+0.0571</td></tr>
+<tr><td>9</td><td>9.39%</td><td>&minus;0.0184</td><td>&minus;0.2568</td><td>+0.3538</td><td>+0.0920</td></tr>
+<tr><td>10 (richest)</td><td>9.33%</td><td>&minus;1.5233</td><td>+0.1101</td><td>&minus;1.7123</td><td>+0.6940</td></tr>
+</tbody></table>
+
+<h2>5. The Neutral-Rate Channel</h2>
+
+<p>The two counterfactuals that change the terminal real rate &mdash; lower foreign demand
+and the CBO debt path &mdash; activate a channel that does not exist in the flexible-wage
+model, and it is worth isolating because it accounts for the largest discrepancy between the
+extension and the published results.</p>
+
+<p><span class="pp">The channel.</span> A counterfactual that raises the terminal real rate
+<span class="mathi">r_f</span> raises the Fisher-consistent rule constant. Holding the monetary shocks fixed, a rise
+<span class="mathi">d</span> in that constant lowers inflation along the transition by</p>
+<div class="mathd">d\pi \;=\; -\,\frac{d}{\phi_\pi - 1 - r_f}.</div>
+<p>Since government debt is nominal and long-term, a permanently lower inflation path raises
+the real value of coupon payments, transferring resources to bondholders, while the heavier
+labor taxation needed to service the debt falls on households who hold little of it. The
+channel is thus redistributive by construction, and it operates in the direction of the
+wealthy.</p>
+
+<p><span class="pp">Measurement.</span> I switch the channel off by subtracting <span class="mathi">d</span> from the
+monetary shock over the transition, which restores the rule constant to its baseline value
+while leaving the terminal condition intact &mdash; the post-600 specification of Section 4.
+Comparing that solution with one in which the constant is allowed to rise isolates the
+channel. The measured shift in inflation matches the closed form to 0.0008 percentage points
+for the CBO column and 0.0001 for lower foreign demand, flat across four hundred quarters,
+while real rates move by at most 0.006 percentage points. The channel is, to a very good
+approximation, purely nominal.</p>
+
+<table class="avoid" style="width:70%">
+<caption>Table 7: Contribution of the neutral-rate channel to welfare (pp)</caption>
+<thead><tr><th>Bin</th><th>CBO debt projections</th><th>Lower foreign demand</th></tr></thead>
+<tbody>
+<tr><td>1 (poorest)</td><td>+0.449</td><td>+0.069</td></tr>
+<tr><td>2</td><td>+0.512</td><td>+0.078</td></tr>
+<tr><td>3</td><td>+0.709</td><td>+0.108</td></tr>
+<tr><td>4</td><td>+0.842</td><td>+0.128</td></tr>
+<tr><td>5</td><td>+0.801</td><td>+0.122</td></tr>
+<tr><td>6</td><td>+0.731</td><td>+0.111</td></tr>
+<tr><td>7</td><td>+0.626</td><td>+0.095</td></tr>
+<tr><td>8</td><td>+0.451</td><td>+0.068</td></tr>
+<tr><td>9</td><td>+0.227</td><td>+0.034</td></tr>
+<tr><td>10 (richest)</td><td>&minus;0.914</td><td>&minus;0.137</td></tr>
+<tr class="rule"><td>Overall mean</td><td>+0.443</td><td>+0.068</td></tr>
+<tr><td>Poor</td><td>+0.449</td><td>+0.069</td></tr>
+<tr><td>Middle</td><td>+0.766</td><td>+0.116</td></tr>
+<tr><td>Rich</td><td>&minus;0.914</td><td>&minus;0.137</td></tr>
+</tbody></table>
+<div class="note">Entries are the change in the CE gain from switching the channel off. A
+positive entry means the channel was reducing that bin's welfare.</div>
+
+<p><span class="pp">Result.</span> For the CBO column the channel is large and sharply
+redistributive. With it operating, the top bin gains +1.609 percentage points relative to the
+baseline; switching it off removes 0.914 of that, so <b>the channel accounts for 57% of the
+entire gain accruing to the top decile</b>. Over bins three through eight it works in the
+opposite direction, and removing it converts losses of 0.28&ndash;0.53 percentage points into
+gains of 0.06&ndash;0.43. Without the channel, all four welfare groups gain in the CBO column,
+as they do in the published table, and the top group matches the published value to 0.006
+percentage points.</p>
+
+<p>For lower foreign demand the channel is proportionally similar but small in absolute
+terms, at most 0.14 percentage points against a counterfactual effect of &minus;1.19 to
++0.25: the terminal rate moves by only 5 basis points there, against 34 for the CBO path.
+Indeed the channel's welfare contribution scales almost exactly linearly in <span class="mathi">d</span>: dividing
+the CBO contribution by the ratio of the two shifts, 6.51, predicts the lower-foreign
+contribution to within one to three percent in every group. That linearity is useful, since
+it means the channel can be priced for any further experiment that moves the terminal steady
+state from the size of the shift alone.</p>
+
+<p><span class="pp">Interpretation.</span> The published, flexible-wage model has no such
+channel: with inflation exogenous and constant, a change in the terminal real rate cannot
+redistribute through the nominal value of government debt. The extension therefore does not
+overturn the paper's conclusions, but it does identify an additional force that operates
+whenever a fiscal experiment moves the neutral rate, and it shows that force to be
+quantitatively first-order for the debt-path counterfactual specifically. A reader of the
+published table should treat the CBO column's distributional pattern as the one most
+sensitive to the assumption that inflation is exogenous.</p>
+
+<script>
+function paint() {
+  if (window.__painted) { return; }
+  window.__painted = true;
+  if (typeof katex === "undefined") { document.title = "KATEX_MISSING"; return; }
+  var mac = {"\\Ind": "\\mathbf{1}"};
+  var bad = 0, n = 0, msg = "";
+  var f = function (sel, dm) {
+    var els = document.querySelectorAll(sel);
+    for (var k = 0; k < els.length; k++) {
+      var s = els[k].textContent;
+      try {
+        els[k].innerHTML = katex.renderToString(s, {
+          displayMode: dm, throwOnError: true, strict: false, macros: mac});
+        n++;
+      } catch (e) {
+        bad++; els[k].style.color = "red";
+        if (msg === "") { msg = " FIRSTBAD[" + s.substring(0,40) + "]:" + e.message.substring(0,60); }
+      }
+    }
+  };
+  f(".mathd", true);
+  f(".mathi", false);
+  document.title = "OK rendered=" + n + " failed=" + bad +
+                   " spans=" + document.querySelectorAll(".katex").length + msg;
+}
+window.addEventListener("load", paint);
+</script>

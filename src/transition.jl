@@ -37,7 +37,7 @@ function h_path_transition_mckay_(ROOT, Pee_path, Puu_path; θ, ν, ies, crra, �
         Pee = Pee_path[i]
         Puu = Puu_path[i]
         v = GHH(θ = θ, ν = ν)
-        P, z_vals = calibration_unemploy_mckay_(ROOT, Pee, Puu, z_u)
+        P, z_vals, _ = calibration_unemploy_mckay_(ROOT, Pee, Puu, z_u)   # [Z-NORM] third return value is the scale factor (was: P, z_vals = ...)
         u = EZ(ies = ies, ra = crra, β = β)
         out[i] = Household(u = u, a_grid = grid(start = a_min, stop = a_max, length = n_a, scale = :log),
             v = v, P = P, z_grid = z_vals)
@@ -45,7 +45,7 @@ function h_path_transition_mckay_(ROOT, Pee_path, Puu_path; θ, ν, ies, crra, �
     return out
 end
 
-function h_path_transition_mckay_init(ROOT, Pee_path, Puu_path; θ, ν, ies, crra, β, a_min, a_max, z_u, n_a, init_state)
+function h_path_transition_mckay_init(ROOT, Pee_path, Puu_path; θ, ν, ies, crra, β, a_min, a_max, z_u, n_a, init_state, z_scale = 1.0)   # [Z-NORM] added z_scale kwarg
     chain_long = zeros(length(init_state),length(Pee_path))
     chain = zeros(2,length(Pee_path))
     init_state_short = zeros(2,1); init_state_short[1] = init_state[1]; init_state_short[2] = 1.0 - init_state[1]; #init_state needs to add up to 1. Always happening in a given distribution
@@ -63,7 +63,7 @@ function h_path_transition_mckay_init(ROOT, Pee_path, Puu_path; θ, ν, ies, crr
         Puu = Puu_path[i]
         v = GHH(θ = θ, ν = ν)
         init_state_new = i == 1 ? init_state : init_state_updated'
-        P, z_vals = calibration_unemploy_mckay_init(ROOT, Pee, Puu, z_u; unemp_rate_target = chain[1,i], Big_init_state = init_state_new)
+        P, z_vals = calibration_unemploy_mckay_init(ROOT, Pee, Puu, z_u; unemp_rate_target = chain[1,i], Big_init_state = init_state_new, z_scale = z_scale)   # [Z-NORM] pass the initial-SS scale factor through
         init_state_updated = init_state_new' * P
         chain_long[:,i] = init_state_updated
         u = EZ(ies = ies, ra = crra, β = β)

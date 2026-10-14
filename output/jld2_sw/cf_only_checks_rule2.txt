@@ -1,0 +1,63 @@
+==============================================================================
+cf_only_checks_rule2.jld2
+TABLE 6 COLUMN: Only stimulus checks
+written by scripts/table6_consolidate_sw.jl  [SW25]
+==============================================================================
+
+SAVED TUPLE: (e_init, e_final, path, pi)
+
+---- MONETARY SPECIFICATION ----
+  phi_pi          = 1.5000
+  pi_bar          = 0.004962931573  (2.0000% ann)
+  i_taylor_ss     = 0.007659932396  (3.0994% ann)
+  r_final         = 0.002683681893  (1.0778% ann)
+  d(i_ss) vs base = +0.000000000000  (+0.0000 pp ann)
+  epsm            = epsm_base, NO ADJUSTMENT anywhere
+                    max|epsm - epsm_base| = 0.000e+00
+  rule constant (i_taylor_ss + epsm_j) equals the baseline's for j=2..600
+  forced period-0 hours [SW22] = no
+
+---- CONVERGENCE ----
+  iterations      = 40
+  wall time       = 6.62 min
+  final inf-norm  = 9.500213e-06   (ftol 1e-5)
+  spec re-verified from this file: max|pi_recursion - pi_saved| = 0.000e+00
+
+---- ITEM (b) GATE: household vs government labour tax ----
+  worst relative gap = 1.566e-07 at j = 1   -> PASSED
+  (1.566e-07 is the known mass-leak constant, not an error)
+
+---- PERIOD-0 BRANCH ----
+  s_1 booked by the household block = 0.90230115171930
+  Gamma_n                           = 0.90230115171930  (diff 0.00e+00)
+  s_flex_1                          = 1.0387091975  (margin +15.1178% vs Gamma_n)
+  Gamma_n is the active branch (ceiling binds).
+  2020Q2 output fall = 8.4002%
+
+---- HEADLINE CE WELFARE (%, paper bin convention) ----
+  Overall mean         model    4.449   diff vs baseline   +2.539   paper   4.29
+  Overall minimum      model   -7.251   diff vs baseline   -1.868   paper  -5.80
+  Poor (bottom 10%)    model    8.929   diff vs baseline   +5.579   paper   8.60
+  Middle (40-60%)      model    4.422   diff vs baseline   +2.378   paper   4.28
+  Rich (top 10%)       model   -2.037   diff vs baseline   -1.712   paper  -1.90
+
+  full decile profile (levels):
+    bin  1 (mass 15.26%)     8.9285
+    bin  2 (mass 10.16%)     7.5301
+    bin  3 (mass  9.53%)     6.7189
+    bin  4 (mass  9.27%)     5.8302
+    bin  5 (mass  9.08%)     4.9122
+    bin  6 (mass  9.25%)     3.9309
+    bin  7 (mass  9.40%)     2.9692
+    bin  8 (mass  9.31%)     1.8761
+    bin  9 (mass  9.39%)     0.7147
+    bin 10 (mass  9.33%)    -2.0372
+
+---- EXTENSION DIAGNOSTICS ----
+  pi 2022Q2 (j=9)   = 9.0679% ann
+  r at j=20         = 0.9928% ann
+  peak pi deviation = +6.7898 pp ann at 2022Q2 (j=9), over j>=2
+  terminal pi       = 2.000000% ann
+  tau_n j=1 / j=2   = 0.89497590 / 0.63625406   (retention LEVEL: lower = heavier tax)
+
+==============================================================================

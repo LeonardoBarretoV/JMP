@@ -237,10 +237,17 @@ function calibration_unemploy_mckay_(ROOT::AbstractString, Pee::Float64, Puu::Fl
     end
     BigP = copy(BigP_prime')
     z_vals = [z_u; z_vals_]
-    return BigP, z_vals
+    # [Z-NORM] Normalize the productivity grid so that aggregate effective labor supply per capita,   # [Z-NORM]
+    # [Z-NORM] Z = sum(Pss .* z), equals 1 in the INITIAL steady state. The unemployed state carries   # [Z-NORM]
+    # [Z-NORM] z_u = 0, so this factor also absorbs the steady-state unemployment rate. The same        # [Z-NORM]
+    # [Z-NORM] constant is reused along the transition (see calibration_unemploy_mckay_init), so Z_t    # [Z-NORM]
+    # [Z-NORM] is free to fall below 1 when unemployment rises.                                         # [Z-NORM]
+    z_scale = 1.0 / sum(ergodic(BigP) .* z_vals)                                                        # [Z-NORM]
+    z_vals = z_scale .* z_vals                                                                          # [Z-NORM]
+    return BigP, z_vals, z_scale   # [Z-NORM] was: return BigP, z_vals
 end
 
-function calibration_unemploy_mckay_init(ROOT::AbstractString, Pee::Float64, Puu::Float64, z_u::Float64; unemp_rate_target, Big_init_state)
+function calibration_unemploy_mckay_init(ROOT::AbstractString, Pee::Float64, Puu::Float64, z_u::Float64; unemp_rate_target, Big_init_state, z_scale = 1.0)   # [Z-NORM] added z_scale kwarg
     P_, z_vals_ = calibration_mckay(ROOT)
     n_z = length(z_vals_)
     Pprime = copy(P_')
@@ -274,7 +281,7 @@ function calibration_unemploy_mckay_init(ROOT::AbstractString, Pee::Float64, Puu
         BigP_prime[2:end, i] = (1.0 - P_eu[i-1] * rescale_sol) * Pprime[:,i-1]
     end
     BigP = copy(BigP_prime')
-    z_vals = [z_u; z_vals_]
+    z_vals = z_scale .* [z_u; z_vals_]   # [Z-NORM] apply the initial-SS scale factor (was: z_vals = [z_u; z_vals_])
     return BigP, z_vals #, init_state_updated
 end
 
